@@ -1,8 +1,8 @@
 # tugas-1-theodorusclarence
 
-Barang: Kotak Korek Api
+Barang: Kaleng Astor
 
 
-|  ![image](https://user-images.githubusercontent.com/55318172/134163331-2026160e-81c5-4d82-bd63-f08f70c0a62e.png) | ![image](https://user-images.githubusercontent.com/55318172/134163337-fa0ad701-77d5-42c6-a5ad-9f5bc885c3e8.png)  |
+|  ![image](https://user-images.githubusercontent.com/55318172/134452228-dfd387a0-d26b-44fa-844b-ed05f0169436.png) | ![image](https://user-images.githubusercontent.com/55318172/134452242-72450e66-8e55-4308-8eee-eaa95e480356.png)  |
 |------|------|
-| ![image](https://user-images.githubusercontent.com/55318172/134163366-2aa3ec7f-a91e-4cb3-819b-3805ab69d2d3.png) | ![image](https://user-images.githubusercontent.com/55318172/134163358-78fb16d2-9280-4792-b53c-fd6b8c4f9129.png) |
+| ![image](https://user-images.githubusercontent.com/55318172/134452255-f93e4aa7-d452-4939-8f12-656f8cebbf96.png) |![image](https://user-images.githubusercontent.com/55318172/134452263-d020fdac-d174-40c7-a7ed-6ccfa27c57b7.png) |
