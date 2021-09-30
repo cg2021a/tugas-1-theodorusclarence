@@ -20,12 +20,15 @@ function main() {
    * D (-0.5, -0.5), Blue  (0.0, 0.0, 1.0)
    */
   // prettier-ignore
-  const vertices = [
-    -0.5,  0.5, 1.0, 0.0, 0.0, // Point A
-     0.5,  0.5, 0.0, 1.0, 0.0,  // Point B
-     0.5, -0.5, 0.0, 0.0, 1.0, // Point C
-    -0.5, -0.5, 0.0, 0.0, 1.0, // Point D
-  ];
+  // const vertices = [
+  //   -0.2, -0.420,
+  //   -0.275, +0.355,
+  //   0, 0.4925,
+  //   0.275, 0.355,
+  //   0.2, -0.420,
+  //   0, -0.4867,
+  //   -0.2, -0.420,
+  // ];
 
   // Create a linked-list for storing the vertices data
   const buffer = gl.createBuffer();
@@ -43,11 +46,12 @@ function main() {
     }
   `;
 
+  // gl_FragColor = vec4(0.74, 0.149, 0.137, 1.0);
   const fragmentShaderSource = `
-    precision mediump float;
-    varying vec3 vColor;
-    void main() {
-        gl_FragColor = vec4(vColor, 1.0);
+  precision mediump float;
+  varying vec3 vColor;
+  void main() {
+      gl_FragColor = vec4(vColor, 1.0);
     }
   `;
 
@@ -83,22 +87,28 @@ function main() {
     2,
     gl.FLOAT,
     false,
-    5 * Float32Array.BYTES_PER_ELEMENT,
+    2 * Float32Array.BYTES_PER_ELEMENT,
     0
   );
   gl.enableVertexAttribArray(aPosition);
-  const aColor = gl.getAttribLocation(shaderProgram, 'aColor');
-  gl.vertexAttribPointer(
-    aColor,
-    3,
-    gl.FLOAT,
-    false,
-    5 * Float32Array.BYTES_PER_ELEMENT,
-    2 * Float32Array.BYTES_PER_ELEMENT
-  );
-  gl.enableVertexAttribArray(aColor);
 
-  let freeze = false;
+  const aColor = gl.getAttribLocation(shaderProgram, 'aColor');
+  let colorBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(color), gl.STATIC_DRAW);
+  gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(aColor);
+  // gl.vertexAttribPointer(
+  //   aColor,
+  //   3,
+  //   gl.FLOAT,
+  //   false,
+  //   5 * Float32Array.BYTES_PER_ELEMENT,
+  //   2 * Float32Array.BYTES_PER_ELEMENT
+  // );
+  // gl.enableVertexAttribArray(aColor);
+
+  let freeze = true;
   // Interactive graphics with mouse
   function onMouseClick(event) {
     freeze = !freeze;
@@ -128,9 +138,9 @@ function main() {
     }
     gl.clearColor(0.13, 0.13, 0.13, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    const primitive = gl.TRIANGLE_FAN;
+    const primitive = gl.TRIANGLES;
     const offset = 0;
-    const nVertex = 4;
+    const nVertex = vertices.length / 2;
     gl.drawArrays(primitive, offset, nVertex);
     requestAnimationFrame(render);
   }
