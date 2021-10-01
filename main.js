@@ -104,7 +104,7 @@ function main() {
     ]
 
     if (dy >= 0.5 || dy <= -0.4) speed = -speed;
-    // dy += speed;
+    dy += speed;
 
     // Clear Color
     gl.clearColor(0.13, 0.13, 0.13, 1.0);
