@@ -12,24 +12,6 @@ function main() {
    */
   const gl = canvas.getContext('webgl'); // The brush and the paints
 
-  // Define vertices data for three points
-  /**
-   * A (-0.5,  0.5), Red   (1.0, 0.0, 0.0)
-   * B ( 0.5,  0.5), Green (0.0, 1.0, 0.0)
-   * C ( 0.5, -0.5), Blue  (0.0, 0.0, 1.0)
-   * D (-0.5, -0.5), Blue  (0.0, 0.0, 1.0)
-   */
-  // prettier-ignore
-  // const vertices = [
-  //   -0.2, -0.420,
-  //   -0.275, +0.355,
-  //   0, 0.4925,
-  //   0.275, 0.355,
-  //   0.2, -0.420,
-  //   0, -0.4867,
-  //   -0.2, -0.420,
-  // ];
-
   // Create a linked-list for storing the vertices data
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -39,9 +21,10 @@ function main() {
     attribute vec2 aPosition;
     attribute vec3 aColor;
     varying vec3 vColor;
-    uniform float uChange;
+    uniform mat4 uTranslate;
+
     void main() {
-      gl_Position = vec4(aPosition + uChange, 0.0, 1.0);
+      gl_Position = uTranslate * vec4(aPosition, 0.0, 1.0);
       vColor = aColor;
     }
   `;
@@ -98,54 +81,50 @@ function main() {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(color), gl.STATIC_DRAW);
   gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(aColor);
-  // gl.vertexAttribPointer(
-  //   aColor,
-  //   3,
-  //   gl.FLOAT,
-  //   false,
-  //   5 * Float32Array.BYTES_PER_ELEMENT,
-  //   2 * Float32Array.BYTES_PER_ELEMENT
-  // );
-  // gl.enableVertexAttribArray(aColor);
 
-  let freeze = true;
-  // Interactive graphics with mouse
-  function onMouseClick(event) {
-    freeze = !freeze;
-  }
-  document.addEventListener('click', onMouseClick);
-  // Interactive graphics with keyboard
-  function onKeydown(event) {
-    if (event.keyCode == 32) freeze = true;
-  }
-  function onKeyup(event) {
-    if (event.keyCode == 32) freeze = false;
-  }
-  document.addEventListener('keydown', onKeydown);
-  document.addEventListener('keyup', onKeyup);
+  let dy = 0;
+  let speed = 0.0104;
 
-  const speedRaw = 1;
-  let speed = speedRaw / 600;
-  let change = 0;
-  const uChange = gl.getUniformLocation(shaderProgram, 'uChange');
+  const uTranslate = gl.getUniformLocation(shaderProgram, 'uTranslate');
+  // prettier-ignore
+  const leftObject = [
+		1.0, 0.0, 0.0, 0.0, // width
+		0.0, 1.0, 0.0, 0.0, // height
+		0.0, 0.0, 1.0, 0.0, // depth
+		-0.50, 0.0, 0.0, 1, 
+	]
 
   function render() {
-    if (!freeze) {
-      // If it is not freezing, then animate the rectangle
-      if (change >= 0.5 || change <= -0.5) speed = -speed;
-      change = change + speed;
-      gl.uniform1f(uChange, change);
-    }
+    // prettier-ignore
+    const rightObject = [
+      1.0, 0.0, 0.0, 0.0,
+      0.0, 1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0, 0.0,
+      0.50, dy, 0.0, 1.0,
+    ]
+
+    if (dy >= 0.5 || dy <= -0.4) speed = -speed;
+    // dy += speed;
+
+    // Clear Color
     gl.clearColor(0.13, 0.13, 0.13, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    const primitive = gl.TRIANGLES;
-    const offset = 0;
-    const nVertex = vertices.length / 2;
-    gl.drawArrays(primitive, offset, nVertex);
+
+    // Draw Left Object
+    gl.uniformMatrix4fv(uTranslate, false, leftObject);
+    gl.drawArrays(gl.TRIANGLES, 0, leftObjectVertices.length / 2);
+
+    // Draw Right Object
+    gl.uniformMatrix4fv(uTranslate, false, rightObject);
+    gl.drawArrays(
+      gl.TRIANGLES,
+      leftObjectVertices.length / 2,
+      (vertices.length - leftObjectVertices.length) / 2
+    );
+
     requestAnimationFrame(render);
   }
 
-  // setInterval(render, 1000 / 60);
   requestAnimationFrame(render);
 }
 
