@@ -23,6 +23,11 @@ sLight.position.set(5, 10, 10);
 const lights = [dLight, aLight, pLight, hLight, sLight];
 addObjects(scene, lights);
 
+lights.forEach((light) => {
+  light.visible = false;
+});
+lights[0].visible = true;
+
 const selectedLight = document.getElementById('light');
 selectedLight.addEventListener('change', (e) => {
   const selected = e.target.value;
