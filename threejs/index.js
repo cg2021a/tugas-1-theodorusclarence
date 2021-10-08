@@ -40,7 +40,7 @@ selectedLight.addEventListener('change', (e) => {
 //#region  //*=========== OBJECTS ===========
 const cube = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+  new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
 );
 cube.position.x = -1;
 
@@ -80,7 +80,8 @@ torus.position.y = -2;
 const torusKnot = new THREE.Mesh(
   new THREE.TorusKnotGeometry(0.5, 0.2, 100, 16),
   new THREE.MeshPhongMaterial({
-    color: '#F9A8D4',
+    color: '#00e0f3',
+    wireframe: true,
   })
 );
 torusKnot.position.y = 2;
