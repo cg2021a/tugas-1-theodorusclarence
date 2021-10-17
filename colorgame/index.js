@@ -12,28 +12,40 @@ camera.position.z = 5;
 const dLight = new THREE.DirectionalLight(0xffffff, 1);
 dLight.position.set(2, 0, 10);
 
-let interval = 1000;
+let interval = 1060;
 let objCount = 0;
 const maxObj = 50;
-function randomlyDrawSphere() {
-  console.log(interval);
-  if (objCount < maxObj) {
-    const sphere = new THREE.Mesh(
-      new THREE.SphereGeometry(0.4, 32, 32),
-      new THREE.MeshPhongMaterial({
-        color: getRandomColor(),
-      })
-    );
-    sphere.position.set(random(-5, 5), random(-2.5, 3), 0);
-    sphere.rotation.set(random(Math.PI, Math.PI), random(Math.PI, Math.PI), 0);
-    scene.add(sphere);
 
-    objCount++;
-    objLeft.innerText = objCount;
-    interval = 1000 - objCount * 20;
-  }
-}
-setInterval(randomlyDrawSphere, interval);
+let timer;
+
+// Gradually speed up spawning object.
+(function () {
+  timer = function () {
+    interval = 1050 - objCount * 20;
+
+    if (objCount < maxObj) {
+      const sphere = new THREE.Mesh(
+        new THREE.SphereGeometry(0.4, 32, 32),
+        new THREE.MeshPhongMaterial({
+          color: getRandomColor(),
+        })
+      );
+      sphere.position.set(random(-5, 5), random(-2.5, 3), 0);
+      sphere.rotation.set(
+        random(Math.PI, Math.PI),
+        random(Math.PI, Math.PI),
+        0
+      );
+      scene.add(sphere);
+
+      objCount++;
+      objLeft.innerText = objCount;
+    }
+
+    setTimeout(timer, interval);
+  };
+  timer();
+})();
 
 const objects = [dLight];
 addObjects(scene, objects);
