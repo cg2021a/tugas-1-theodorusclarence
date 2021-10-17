@@ -4,6 +4,8 @@ Deployment: https://grafkom-astor.thcl.dev
 
 Mencoba Threejs: https://grafkom-astor.thcl.dev/threejs
 
+Tugas Individu Color Game: https://grafkom-astor.thcl.dev/colorgame
+
 Barang: Kaleng Astor
 
 | ![image](https://user-images.githubusercontent.com/55318172/134452228-dfd387a0-d26b-44fa-844b-ed05f0169436.png) | ![image](https://user-images.githubusercontent.com/55318172/135837090-9c77ab57-0104-431c-9da1-b2763a3a8124.png) |
