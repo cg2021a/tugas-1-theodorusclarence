@@ -40,7 +40,7 @@ let renderer;
   camera.position.set(-1, 0, 0);
 
   //#region  //*=========== Panorama ===========
-  const texture = new THREE.TextureLoader().load('images/pier.jpg');
+  const texture = new THREE.TextureLoader().load('/individu8/images/pier.jpg');
 
   const geometry = new THREE.SphereGeometry(5, 32, 32);
   const material = new THREE.MeshBasicMaterial({
@@ -53,7 +53,9 @@ let renderer;
   //#endregion  //*======== Panorama ===========
 
   //#region  //*=========== Reflective ===========
-  const textureEquirec = new THREE.TextureLoader().load('images/pier.jpg');
+  const textureEquirec = new THREE.TextureLoader().load(
+    '/individu8/images/pier.jpg'
+  );
   textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
   textureEquirec.encoding = THREE.sRGBEncoding;
 
@@ -87,7 +89,9 @@ let renderer;
   //#endregion  //*======== Plane ===========
 
   //#region  //*=========== Create Cube ===========
-  const cubeTexture = new THREE.TextureLoader().load('images/large-og.jpg');
+  const cubeTexture = new THREE.TextureLoader().load(
+    '/individu8/images/large-og.jpg'
+  );
   const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
   const cubeMaterial = new THREE.MeshPhongMaterial({
     map: cubeTexture,
@@ -102,7 +106,7 @@ let renderer;
   //#region  //*=========== Object ===========
   const objLoader = new OBJLoader();
   let eyeball;
-  objLoader.load('obj/stickman.OBJ', (object) => {
+  objLoader.load('/individu8/obj/stickman.OBJ', (object) => {
     eyeball = object;
     object.position.set(0.2, 0, -2.5);
     object.castShadow = true;
